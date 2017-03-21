@@ -23,6 +23,9 @@ export function authHttpServiceFactory( http: Http, options: RequestOptions) {
   return new AuthHttp( new AuthConfig({}), http, options );
 }
 
+//Services
+import { AuthGuardService } from './services/auth-guard.service';
+
 //components
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -44,13 +47,15 @@ import { ProtegidaComponent } from './components/protegida/protegida.component';
     HttpModule,
     APP_ROUTING
   ],
-  providers: [Auth,
-  // AUTH_PROVIDERS,
-  {
-    provide: AuthHttp,
-    useFactory: authHttpServiceFactory,
-    deps: [ Http, RequestOptions ]
-  }
+  providers: [
+    Auth,
+    AuthGuardService,
+    // AUTH_PROVIDERS,
+    {
+      provide: AuthHttp,
+      useFactory: authHttpServiceFactory,
+      deps: [ Http, RequestOptions ]
+    }
   ],
   bootstrap: [AppComponent]
 })
